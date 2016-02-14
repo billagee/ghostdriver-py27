@@ -7,15 +7,18 @@ class TestGoogleGhostDriver(unittest.TestCase):
     def setUp(self):
         # The phantomjs executable is assumed to be in your PATH:
         self.driver = webdriver.PhantomJS('phantomjs')
+        self.start_url = "http://www.google.com"
 
     # Simple test that performs a google search
     def testGoogleSearch(self):
-        self.driver.get("http://www.google.com")
+        print("Navigating to '{0}'...".format(self.start_url))
+        self.driver.get(self.start_url)
         self.assertEqual(u'Google', self.driver.title)
         # Enter text into the search field
+        print("Checking search box presence...")
         self.assertTrue(self.driver.find_element_by_name("q").is_displayed())
+        print("Performing search request...")
         self.driver.find_element_by_name("q").send_keys("selenium")
-        # Click the search button
         self.driver.find_element_by_name("btnG").click()
         print("current_url is now '{0}'".format(self.driver.current_url))
 
